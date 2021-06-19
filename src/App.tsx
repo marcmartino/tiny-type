@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
+
+import { RedirectedInput } from "./RedirectedInput";
 
 function App() {
   return (
@@ -19,27 +21,7 @@ function App() {
           ></path>
         </svg>
       </div>
-      <p className="mt-6 tracking-wide">
-        Edit <code>src/App.jsx</code> and save to reload.
-      </p>
-      <div className="mt-4 flex justify-center">
-        <a
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="ml-4 bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"
-          href="https://tailwindcss.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Tailwind
-        </a>
-      </div>
+      <RedirectedInput />
     </div>
   );
 }
