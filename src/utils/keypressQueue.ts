@@ -26,6 +26,7 @@ let keypressStack: KeypressStackItem<typeof artseyRight>[] = [];
 
 export const onKeyDown =
   <T extends DefinitionNode<any>, L extends Letter>(
+    callback: (letter: Letter) => void,
     mapping: T,
     keyValidation: (l: string) => l is L
   ): KeyboardEventHandler<HTMLInputElement> =>
@@ -49,12 +50,11 @@ export const onKeyDown =
           key
         ),
         timerId: setTimeout(
-          (stack: KeypressStackItem<T>) =>
-            console.log(
-              "keydown timer up",
-              // @ts-ignore
-              getLastChordKey(stack)
-            ),
+          (stack: KeypressStackItem<T>[]) => {
+            const newKey = getLastChordKey(stack);
+            console.log("keydown timer up", newKey);
+            newKey && callback(newKey);
+          },
           100,
           keypressStack
         ),
@@ -85,7 +85,6 @@ export const onKeyUp =
     keyValidation: (l: string) => l is L
   ): KeyboardEventHandler<HTMLInputElement> =>
   (e) => {
-    //   console.log("up", e.keyCode, e.key);
     const key = e.key;
     if (keyValidation(key)) {
       keypressStack.unshift({

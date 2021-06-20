@@ -24,18 +24,16 @@ import { KeyCodeMapping } from "./artseyMap";
 
 // export const baseRemap = remapKeycode(letterToKeycode(baseKeys));
 
-// // this should eventually take into account a cursor position
-// // so that delete and backspaceand enter can function properly
-// export const updateText =
-//   (newCode: KeyCode) =>
-//   (prevText: string): string => {
-//     const newChar = lettersByCode[newCode];
+// this should eventually take into account a cursor position
+// so that delete and backspaceand enter can function properly
+export const updateText =
+  (newLetter: Letter) =>
+  (prevText: string): string => {
+    switch (newLetter) {
+      case "Del":
+        return prevText.slice(0, prevText.length - 2);
 
-//     switch (newChar) {
-//       case "Del":
-//         return prevText.slice(0, prevText.length - 2);
-
-//       default:
-//         return prevText + newChar;
-//     }
-//   };
+      default:
+        return prevText + newLetter;
+    }
+  };

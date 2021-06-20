@@ -1,4 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import { Dispatch, FC, KeyboardEventHandler, useRef, useState } from "react";
 import { isValidKeycode, KeyCode, keycodes, Letter } from "./utils/keycodes";
 // import { baseRemap, updateText } from "./utils/keymappings";
@@ -7,6 +7,7 @@ import { map as oMap } from "fp-ts/Option";
 import { artseyRight } from "./utils/artseyRight.gen";
 import { DefinitionNode, isBaseKeyRLetter } from "./utils/artseyMap";
 import { onKeyDown, onKeyUp } from "./utils/keypressQueue";
+import { updateText } from "./utils/keymappings";
 
 export const RedirectedInput: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +29,14 @@ export const RedirectedInput: FC = () => {
       value={inputText}
       ref={inputRef}
       className="text-black"
-      onKeyDown={onKeyDown(artseyRight, isBaseKeyRLetter)}
+      onKeyDown={onKeyDown(
+        flow(
+          (l) => updateText(l),
+          (newText) => setInputText(newText)
+        ),
+        artseyRight,
+        isBaseKeyRLetter
+      )}
       onKeyUp={onKeyUp(isBaseKeyRLetter)}
     />
   );
