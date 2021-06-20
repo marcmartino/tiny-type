@@ -6,20 +6,7 @@ import { flow, pipe } from "fp-ts/lib/function";
 export type BaseKeysMapping = Record<Letter, Letter>;
 export type KeyCodeMapping = Readonly<Record<KeyCode, KeyCode>>;
 
-type DoublePress<C extends Letter> = `${C}${C}`;
-type TriplePress<C extends Letter> = `${C}${C}${C}`;
-type QuadruplePress<C extends Letter> = `${C}${C}${C}${C}`;
-
-type DoublePressR = DoublePress<keyof typeof baseKeysR>;
-type TriplePressR = TriplePress<keyof typeof baseKeysR>;
-type QuadPressR = QuadruplePress<keyof typeof baseKeysR>;
-
 export type BaseKeyRLetter = keyof typeof baseKeysR;
-
-type PressKey<B extends Letter> =
-  | DoublePress<B>
-  | TriplePress<B>
-  | QuadruplePress<B>;
 
 export const baseKeysR = {
   j: "a",
@@ -32,10 +19,14 @@ export const baseKeysR = {
   "/": "o",
 };
 
+export const isBaseKeyRLetter = (str: string): str is BaseKeyRLetter =>
+  !!baseKeysR[str as BaseKeyRLetter];
+
 const singlePressKeysR: [[BaseKeyRLetter], Letter][] = (
   Object.entries(baseKeysR) as [BaseKeyRLetter, Letter][]
 ).map(([x, y]) => [[x], y]);
 
+// TODO: these simul press keys should be uniqueness checked
 export const doublePressKeysR: [[BaseKeyRLetter, BaseKeyRLetter], Letter][] = [
   [["m", "/"], "b"],
   [["m", ","], "c"],
@@ -146,17 +137,7 @@ const genKeyTranslationTree = <C extends Letter>(
   pipe(
     simulDefs,
     NEA.fromArray,
-    O.map(
-      //   flow(
-      //     (defs) => [NEA.head(defs), NEA.tail(defs)] as const,
-      //     ([[simulKey, endVal], tail]) =>
-      //       simulKey.reduce(
-      //         (defNode, keyLetter) => lettersToTree([keyLetter], defNode),
-      //         {} as DefinitionNode<C>
-      //       )
-      //   )
-      NEA.reduce({} as DefinitionNode<C>, lettersToTree)
-    ),
+    O.map(NEA.reduce({} as DefinitionNode<C>, lettersToTree)),
     O.match(
       () => node,
       (defNode) => defNode
@@ -168,27 +149,6 @@ const lettersToTree = <C extends Letter>(
   [keys, end]: [C[], Letter]
 ): DefinitionNode<C> => {
   const defNode = cloneDefNode(prev);
-  //   permute(keys).forEach((ls) => {
-  //     let prevRef = defNode;
-  //     for (let i = 0; i < ls.length; i++) {
-  //       const element = ls[i] as C;
-  //       let elementObj = prevRef[element];
-  //       if (elementObj === undefined) {
-  //         prevRef[element] = { then: {} as DefinitionNode<C> };
-  //       }
-
-  //       if (i === ls.length - 1 && typeof prevRef[element] === "object") {
-  //         prevRef[element]?.end && console.error("overwriting end prop", prevRef);
-  //         prevRef[element].end = end;
-  //         // prevRef[element].then ??= {} as DefinitionNode<C>;
-  //       }
-
-  //       if (prevRef[element]?.then) {
-  //         prevRef = prevRef[element].then;
-  //       }
-  //     }
-  //   });
-  //   return defNode;
   return permute(keys).reduce(addLettersGroupToNode(end), defNode);
 };
 

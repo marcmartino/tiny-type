@@ -1,6 +1,6 @@
 import { BaseKeyRLetter, DefinitionNode } from "./artseyMap";
 
-const artseyRight: DefinitionNode<BaseKeyRLetter> = {
+export const artseyRight: DefinitionNode<BaseKeyRLetter> = {
   j: {
     end: "a",
     then: {
