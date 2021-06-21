@@ -30,8 +30,8 @@ export const updateText =
   (newLetter: Letter) =>
   (prevText: string): string => {
     switch (newLetter) {
-      case "Del":
-        return prevText.slice(0, prevText.length - 2);
+      case "Backspace":
+        return prevText.slice(0, prevText.length - 1);
 
       default:
         return prevText + newLetter;

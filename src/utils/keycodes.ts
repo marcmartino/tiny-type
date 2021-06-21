@@ -1,4 +1,5 @@
 export const keycodes: Readonly<Record<Letter, KeyCode>> = {
+  Backspace: 8,
   "0": 48,
   "1": 49,
   "2": 50,
@@ -188,9 +189,11 @@ export type Letter =
   | "{"
   | "P"
   | "-"
-  | "_";
+  | "_"
+  | "Backspace";
 
 export type KeyCode =
+  | 8
   | 13
   | 14
   | 15
@@ -307,4 +310,5 @@ export type KeyCode =
   | 126
   | 127;
 
-export const isValidKeycode = (n: number): n is KeyCode => n >= 13 && n <= 127;
+export const isValidKeycode = (n: number): n is KeyCode =>
+  (n >= 13 && n <= 127) || n === 8;

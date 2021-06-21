@@ -44,10 +44,10 @@ export const doublePressKeysR: [[BaseKeyRLetter, BaseKeyRLetter], Letter][] = [
   [["j", "/"], "/"],
   [["l", "."], "!"],
   [["k", "."], "Del"],
+  [["m", "k"], "Backspace"],
   // "m;": "Ctrl",
   // ",;": "GUI",
   // "k,": "Shift",
-  // "mk": "Backspace",
   // ".;": "Alt",
 ];
 
@@ -176,3 +176,5 @@ export const artseyRTree = genKeyTranslationTree([
   ...triplePressKeysR,
   ...quadPressKeysR,
 ]);
+
+console.log(artseyRTree);
