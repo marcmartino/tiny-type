@@ -45,6 +45,7 @@ export const doublePressKeysR: [[BaseKeyRLetter, BaseKeyRLetter], Letter][] = [
   [["l", "."], "!"],
   [["k", "."], "Del"],
   [["m", "k"], "Backspace"],
+  [["j", "m"], "Enter"],
   // "m;": "Ctrl",
   // ",;": "GUI",
   // "k,": "Shift",
@@ -170,11 +171,11 @@ const addLettersGroupToNode =
       : node;
   };
 
-export const artseyRTree = genKeyTranslationTree([
-  ...singlePressKeysR,
-  ...doublePressKeysR,
-  ...triplePressKeysR,
-  ...quadPressKeysR,
-]);
+// export const artseyRTree = genKeyTranslationTree([
+//   ...singlePressKeysR,
+//   ...doublePressKeysR,
+//   ...triplePressKeysR,
+//   ...quadPressKeysR,
+// ]);
 
-console.log(artseyRTree);
+// console.log(artseyRTree);

@@ -70,6 +70,10 @@ export const artseyRight: DefinitionNode<BaseKeyRLetter> = {
         end: "/",
         then: {},
       },
+      m: {
+        end: "Enter",
+        then: {},
+      },
       l: {
         then: {
           k: {
@@ -395,6 +399,10 @@ export const artseyRight: DefinitionNode<BaseKeyRLetter> = {
       },
       k: {
         end: "Backspace",
+        then: {},
+      },
+      j: {
+        end: "Enter",
         then: {},
       },
     },

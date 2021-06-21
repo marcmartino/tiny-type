@@ -33,6 +33,9 @@ export const updateText =
       case "Backspace":
         return prevText.slice(0, prevText.length - 1);
 
+      case "Enter":
+        return "";
+
       default:
         return prevText + newLetter;
     }
